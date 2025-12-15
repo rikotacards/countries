@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router";
 import { VisitedPage } from "./pages/VisitedPage";
 import { Layout } from "./layout/Layout";
-import { LocationPage } from "./pages/LocationPage";
 import { StatsPage } from "./pages/StatsPage";
 import { TripsPage } from "./pages/TripsPage";
 import { SettingsPage } from "./pages/SettingsPage";
@@ -18,7 +17,6 @@ export const App = () => {
           <Route path={"stats"} element={<StatsPage />} />
           <Route path={"trips"} element={<TripsPage />} />
           <Route path={"settings"} element={<SettingsPage />} />
-          <Route path={"/country/:countryCode"} element={<LocationPage />} />
         </Route>
       </Route>
     </Routes>
