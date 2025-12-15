@@ -29,10 +29,10 @@ export const LoginPage: React.FC = () => {
         }}
       >
         <Typography fontWeight={"bold"} textAlign={"center"}>
-          Welcome to Trips
+          Welcome to Countries.fyi
         </Typography>
         <Typography textAlign={"center"}>
-          Keep track of all countries and cities you've travelled to.
+          Track of all countries and cities you've traveled to.
         </Typography>
 
         <Button
