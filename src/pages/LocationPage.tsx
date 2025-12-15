@@ -5,16 +5,16 @@ import {
   getEmojiFlag,
   type TCountryCode,
 } from "countries-list";
-import { useNavigate, useParams } from "react-router";
+import {  useParams } from "react-router";
 import { Cities } from "../components/Cities";
-
-export const LocationPage: React.FC = () => {
+interface LocationPageProps {
+  countryCode?: TCountryCode
+  onClose: () => void;
+}
+export const LocationPage: React.FC<LocationPageProps> = ({countryCode, onClose}) => {
   const params = useParams();
-  const nav = useNavigate();
-  const onBack = () => {
-    nav(-1);
-  };
-  const o = getCountryData(params.countryCode as TCountryCode);
+  
+  const o = getCountryData(countryCode as TCountryCode);
   const { name } = o;
   const emoji = getEmojiFlag(o.iso2);
   return (
@@ -29,7 +29,7 @@ export const LocationPage: React.FC = () => {
             alignItems: "center",
           }}
         >
-          <IconButton sx={{position: 'absolute'}}  onClick={onBack}>
+          <IconButton sx={{position: 'absolute'}}  onClick={onClose}>
             <ArrowBackIosNew />
           </IconButton>
       

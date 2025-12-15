@@ -10,7 +10,7 @@ export const useSignInWithGoogle = () => {
           // Optional: Specify a redirect URL after successful login.
           // This URL MUST be in your Supabase and Google console authorized list.
           // If omitted, it will use the Site URL defined in your Supabase settings.
-          // redirectTo: 'https://example.com/welcome'
+          // redirectTo: 'https://localhost:5173'
         },
       }),
   });

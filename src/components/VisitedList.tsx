@@ -6,18 +6,14 @@ import {
   getEmojiFlag,
   type TCountryCode,
 } from "countries-list";
-import { useNavigate } from "react-router";
 import { NoCountries } from "./NoCountries";
 import { ListSkeleton } from "./ListSkeleton";
 interface VisitedListProps {
     toggleOpen: () => void;
+    onClick: (code: TCountryCode) => void;
 }
-export const VisitedList: React.FC<VisitedListProps> = ({toggleOpen}) => {
+export const VisitedList: React.FC<VisitedListProps> = ({toggleOpen, onClick}) => {
   const visited = useVisited();
-  const nav = useNavigate();
-  const goToLocation = (countryCode: TCountryCode | false) => {
-    nav(`/country/${countryCode}`);
-  };
   if (visited.isLoading) {
     return <Box sx={{p:2}}>
       <ListSkeleton/>
@@ -31,7 +27,7 @@ export const VisitedList: React.FC<VisitedListProps> = ({toggleOpen}) => {
     const emoji = getEmojiFlag(r.countryCode);
     return (
       <LocationRowLayout
-        onClick={() => goToLocation(r.countryCode)}
+        onClick={() => onClick(r.countryCode)}
         flagImage={emoji}
         key={r.countryCode}
         locationName={countryObject.name}

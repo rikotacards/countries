@@ -2,32 +2,47 @@ import {
   AppBar,
   Avatar,
   Box,
-  Button,
   Divider,
   IconButton,
+  Tab,
+  Tabs,
   Toolbar,
 } from "@mui/material";
 import type { PropsWithChildren } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router";
 import { useAuth } from "../providers/contexts/authContext";
+import React from "react";
 
 export const Layout: React.FC<PropsWithChildren> = () => {
   const nav = useNavigate();
   const auth = useAuth();
   const l = useLocation();
   const page = l.pathname.slice(0);
-  console.log(page);
-  const goStats = () => {
-    nav("stats");
-  };
-  const goVisited = () => {
-    nav("/");
-  };
-  const goTrips = () => {
-    nav("trips");
-  };
+  console.log("page", page);
+  const [selected, setSelected] = React.useState<string | null>(null);
+  React.useEffect(() => {
+    setSelected(page);
+  }, [page]);
   const goSettings = () => {
     nav("settings");
+  };
+  const tabs = [
+    {
+      label: "Visited",
+      path: "/",
+    },
+    {
+      label: "Trips",
+      path: "/trips",
+    },
+    {
+      label: "Stats",
+      path: "/stats",
+    },
+  ];
+  const onClick = (path: string) => {
+    setSelected(path);
+    nav(path);
   };
   return (
     <Box>
@@ -45,42 +60,32 @@ export const Layout: React.FC<PropsWithChildren> = () => {
           backdropFilter: "blur(10px)",
         }}
       >
-        <Toolbar>
-          <Button
-            sx={{
-              fontWeight: page === "/" ? "bold" : undefined,
-              textTransform: "capitalize",
-            }}
-            onClick={goVisited}
-          >
-            Visited
-          </Button>
-          <Button
-            sx={{
-              fontWeight: page === "/trips" ? "bold" : undefined,
-              textTransform: "capitalize",
-            }}
-            onClick={goTrips}
-          >
-            Trips
-          </Button>
-          <Button
-            sx={{
-              fontWeight: page === "/stats" ? "bold" : undefined,
-              textTransform: "capitalize",
-            }}
-            onClick={goStats}
-          >
-            Stats
-          </Button>
+        <Toolbar variant="dense" sx={{ display: "flex", flexDirection: "row" }}>
+          <Tabs value={selected}>
+            {tabs.map((t) => (
+              <Tab
+                sx={{ textTransform: "capitalize" }}
+                label={t.label}
+                value={t.path}
+                onClick={() => onClick(t.path)}
+              />
+            ))}
+            <Tab sx={{ display: "none" }} value={"/settings"} />
+          </Tabs>
+
           <IconButton sx={{ ml: "auto" }} onClick={goSettings}>
             <Avatar
               src={auth.user?.user_metadata?.["avatar_url"]}
-              sx={{ height: "30px", width: "30px" }}
+              sx={(t) => ({
+                border: page === "/settings" ? "2px solid" : undefined,
+                color: t.palette.primary.main,
+                height: "30px",
+                width: "30px",
+              })}
             />
           </IconButton>
         </Toolbar>
-        <Divider />
+        <Divider sx={{ width: "100%" }} />
       </AppBar>
     </Box>
   );
