@@ -31,8 +31,8 @@ export const Layout: React.FC<PropsWithChildren> = () => {
   };
   return (
     <Box>
+      <Toolbar />
       <main>
-        <Toolbar />
         <Outlet />
       </main>
       <Toolbar />
