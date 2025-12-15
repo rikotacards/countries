@@ -1,4 +1,4 @@
-import { Box, CircularProgress, List } from "@mui/material";
+import { Box, List } from "@mui/material";
 import { useVisited } from "../hooks/queries/useVisited";
 import { LocationRowLayout } from "./LocationRowLayout";
 import {

@@ -89,10 +89,10 @@ export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
           label={"When"}
           value={
             hasValidDates
-              ? `${new Date(start)?.toLocaleDateString(
+              ? `${new Date(start.toDate())?.toLocaleDateString(
                   "en-GB",
                   formatOptions
-                )} - ${new Date(end)?.toLocaleDateString(
+                )} - ${new Date(end.toDate())?.toLocaleDateString(
                   "en-GB",
                   formatOptions
                 )}`

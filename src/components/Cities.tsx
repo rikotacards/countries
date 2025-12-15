@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, List, Typography } from "@mui/material";
+import { Box, IconButton, List, Typography } from "@mui/material";
 import { AddCityDialog } from "./AddCityDialog";
 import React from "react";
 import { useCitiesVisited } from "../hooks/queries/useCitiesVisited";

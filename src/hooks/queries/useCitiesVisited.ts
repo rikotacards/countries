@@ -30,8 +30,11 @@ export const useCitiesVisited = () => {
         data.forEach((item) => {
           if (item.cities) {
             res.push({
+              //@ts-ignore
               name: item.cities?.name,
+              //@ts-ignore
               geonameid: item.cities?.geonameid,
+              //@ts-ignore
               country_code: item.cities?.country_code,
             });
           }

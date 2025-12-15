@@ -1,10 +1,8 @@
 import {
   AppBar,
   Box,
-  Button,
   IconButton,
   InputAdornment,
-  Paper,
   TextField,
   Toolbar,
   Typography,

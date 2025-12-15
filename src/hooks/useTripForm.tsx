@@ -28,10 +28,10 @@ export const useTripForm = (formData?: ITrip) => {
   const onSetLocation = (location: LocationProps) => {
     setLocation(location);
   };
-  const [start, setStart] = React.useState<PickerValue | null | Date>(
+  const [start, setStart] = React.useState<PickerValue | null>(
     convertIsoToPickerValue(formData?.start_date)
   );
-  const [end, setEnd] = React.useState<PickerValue | null | Date>(
+  const [end, setEnd] = React.useState<PickerValue | null>(
     convertIsoToPickerValue(formData?.end_date)
   );
   const [notes, setNotes] = React.useState(formData?.notes);
