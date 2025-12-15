@@ -10,7 +10,7 @@ export const AuthCheck: React.FC = () => {
   if (auth.loading) {
     return <LinearProgress />;
   }
-  if (!auth.user && page !== "login") {
+  if (!auth.user && page !== "/login") {
     nav("login");
   }
   return <Outlet />;
