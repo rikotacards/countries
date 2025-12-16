@@ -31,7 +31,7 @@ export const Cities: React.FC<CitiesProps> = ({ countryCode }) => {
     );
   });
   return (
-    <Box sx={{ p: 2 }}>
+    <Box sx={{ p: 0 }}>
       <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
         <Typography fontWeight={'bold'} variant="body1">Visited Cities: {rows?.length}</Typography>
         <IconButton color="primary" onClick={onOpen}><Add/></IconButton>

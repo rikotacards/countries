@@ -49,7 +49,7 @@ export const TripsPage: React.FC = () => {
         <Typography variant="h5" fontWeight={"bold"} pl={2}>
           Trips
         </Typography>
-        <IconButton onClick={toggleOpen}>
+        <IconButton  color='primary' sx={{ ml: "auto", mr: 2 }} onClick={toggleOpen}>
           <Add />
         </IconButton>
       </Box>

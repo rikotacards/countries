@@ -31,7 +31,7 @@ export const AddCityDialog: React.FC<AddCountryDialogProps> = ({
   }, [open]);
   return (
     <DialogOrDrawer open={open} onClose={onClose}>
-      <DialogTitle sx={{display: 'flex', alignItems: 'center'}}>
+      <DialogTitle sx={{ display: 'flex', alignItems: 'center'}}>
         <Typography fontWeight={"bold"} variant="h5">
           Add your visits
         </Typography>
@@ -47,7 +47,7 @@ export const AddCityDialog: React.FC<AddCountryDialogProps> = ({
         onChange={onChange}
         fullWidth
       />
-      <DialogContent sx={{p:0}}>
+      <DialogContent sx={{width:500}}>
         <CityList countryCode={countryCode} filter={debounce} />
       </DialogContent>
     </DialogOrDrawer>

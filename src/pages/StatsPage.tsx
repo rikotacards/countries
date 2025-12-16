@@ -1,7 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import { StatLayout } from "../components/StatLayout";
+import { useVisited } from "../hooks/queries/useVisited";
+import { useCitiesVisited } from "../hooks/queries/useCitiesVisited";
 
 export const StatsPage: React.FC = () => {
+  const countryCount = useVisited().data?.length;
+  const getCities = useCitiesVisited();
+  const cityCount = getCities("")?.data;
+  console.log("city", cityCount);
   return (
     <Box>
       <Typography p={2} variant="h5" fontWeight={"bold"}>
@@ -14,8 +20,8 @@ export const StatsPage: React.FC = () => {
           justifyContent: "space-around",
         }}
       >
-        <StatLayout stat={"25"} desc="Countries" />
-        <StatLayout stat={"25"} desc="Cities" />
+        <StatLayout stat={`${countryCount}`} desc="Countries" />
+        <StatLayout stat={`${cityCount}` || '0'} desc="Cities" />
         <StatLayout stat={"14%"} desc="of the world" />
       </Box>
     </Box>

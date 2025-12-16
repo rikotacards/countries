@@ -53,14 +53,14 @@ export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
     onClose();
   };
   const deleteTrip = useDeleteTrip();
-  const onDelete = async(id?: string) => {
-    if(!id){
-        console.error('No id')
-        return
+  const onDelete = async (id?: string) => {
+    if (!id) {
+      console.error("No id");
+      return;
     }
     await deleteTrip.mutateAsync(id);
-    onClose()
-  }
+    onClose();
+  };
   const locationValue =
     location && countryName ? `${location.name}` + `, ${countryName}` : "";
   const hasValidDates = start && end;
@@ -79,7 +79,7 @@ export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
           <Close />
         </IconButton>
       </DialogTitle>
-      <DialogContent sx={{ flexGrow: 1 }}>
+      <DialogContent sx={{ width: "500px", flexGrow: 1 }}>
         <FormInput
           label={"Where"}
           onClick={onOpenDestination}
@@ -127,21 +127,27 @@ export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
       <DialogActions>
         <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
           <Button
-            sx={{ m: 1 }}
+            disableElevation
+            sx={{ m: 1, textTransform: "capitalize" }}
             onClick={submit}
             size="large"
             variant="contained"
           >
             {actionLabel}
           </Button>
-          {formData && <Button
-          onClick={() => onDelete(formData.id)}
-          sx={{ m: 1 }} size="large" variant="outlined">
-            Delete
-          </Button>}
+          {formData && (
+            <Button
+              onClick={() => onDelete(formData.id)}
+              sx={{ m: 1, textTransform: "capitalize" }}
+              size="large"
+              variant="outlined"
+            >
+              Delete
+            </Button>
+          )}
           <Button
             onClick={onClose}
-            sx={{ m: 1 }}
+            sx={{ m: 1, textTransform: "capitalize" }}
             size="large"
             variant="text"
             fullWidth

@@ -1,18 +1,17 @@
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import React from "react";
-import { DateField } from "@mui/x-date-pickers/DateField";
 import {
-  AppBar,
   Button,
   DialogActions,
   DialogContent,
+  DialogTitle,
   IconButton,
-  Toolbar,
   Typography,
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import type { PickerValue } from "@mui/x-date-pickers/internals";
+import { DateCalendar } from "@mui/x-date-pickers";
 interface Args {
   onClose: () => void;
   start?: PickerValue;
@@ -30,29 +29,37 @@ export const TripDatesForm: React.FC<Args> = ({
   const duration = end && start ? end.diff(start, "day") : null;
   return (
     <>
-      <AppBar variant="outlined" position="relative">
-        <Toolbar>
-          <Typography fontWeight={"bold"}>When</Typography>
-          <IconButton sx={{ ml: "auto" }} onClick={onClose}>
-            <Close />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+      <DialogTitle
+        sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+      >
+        <Typography variant="h5" fontWeight={"bold"}>
+          When
+        </Typography>
+        <IconButton sx={{ ml: "auto" }} onClick={onClose}>
+          <Close />
+        </IconButton>
+      </DialogTitle>
       <DialogContent sx={{ display: "flex", flexDirection: "column" }}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DateField
+          <Typography sx={{ textAlign: "center" }} fontWeight={"bold"}>
+            Start date
+          </Typography>
+          <DateCalendar
+            disableHighlightToday
             value={start}
             onChange={(newValue) => onSetStart(newValue)}
             sx={{ mb: 1 }}
-            label="Start date"
           />
-          <DateField
+          <Typography sx={{ textAlign: "center" }} fontWeight={"bold"}>
+            End date
+          </Typography>
+          <DateCalendar
+            disableHighlightToday
             sx={{ mb: 1 }}
             value={end}
             onChange={(newValue) => {
               onSetEnd(newValue);
             }}
-            label="End date"
           />
         </LocalizationProvider>
         {!!duration && <Typography>{duration} days</Typography>}
