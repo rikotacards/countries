@@ -7,11 +7,11 @@ import { DialogOrDrawer } from "../components/DialogOrDrawer";
 import { LocationPage } from "./LocationPage";
 import type { TCountryCode } from "countries-list";
 import { useVisited } from "../hooks/queries/useVisited";
+import { ProgressBar } from "../components/ProgressBar";
 
 export const VisitedPage: React.FC = () => {
   const [open, setOpen] = React.useState(false);
   const visitCount = useVisited().data?.length || 0;
-
   const [select, setSelect] = React.useState<TCountryCode | undefined>();
   const onSelect = (code: TCountryCode) => {
     setSelect(code);
@@ -41,6 +41,7 @@ export const VisitedPage: React.FC = () => {
           <Add color="primary" />
         </IconButton>
       </Stack>
+      <ProgressBar value={visitCount}/>
       <VisitedList onClick={onSelect} toggleOpen={onOpen} />
 
       <AddCountryDialog onClose={onClose} open={open} />

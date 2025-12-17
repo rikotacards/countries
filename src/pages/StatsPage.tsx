@@ -7,7 +7,6 @@ export const StatsPage: React.FC = () => {
   const countryCount = useVisited().data?.length;
   const getCities = useCitiesVisited();
   const cityCount = getCities("")?.data;
-  console.log("city", cityCount);
   return (
     <Box>
       <Typography p={2} variant="h5" fontWeight={"bold"}>
