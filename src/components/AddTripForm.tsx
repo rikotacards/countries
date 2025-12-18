@@ -51,14 +51,16 @@ export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
       return;
     }
     if (location.isCity && location.geonameid) {
+      await addCountry.mutateAsync(location.country_code);
       await addCity.mutateAsync({
         geonameid: location.geonameid,
         country_code: location.country_code,
       });
     }
-    await addCountry.mutateAsync(location.country_code);
     await addTrip.mutateAsync({
-      ...location,
+      geonameid: location.geonameid,
+      country_code: location.country_code,
+      name: location.name,
       start_date: start.toISOString(),
       end_date: end.toISOString(),
       notes,
@@ -68,7 +70,9 @@ export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
   const onUpdate = async () => {
     if (formData && formData.id && start && end) {
       await update.mutateAsync({
-        ...location,
+        geonameid: location.geonameid,
+        country_code: location.country_code,
+        name: location.name,
         id: formData.id,
         start_date: start.toISOString(),
         end_date: end.toISOString(),

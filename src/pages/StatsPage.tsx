@@ -6,7 +6,8 @@ import { useCitiesVisited } from "../hooks/queries/useCitiesVisited";
 export const StatsPage: React.FC = () => {
   const countryCount = useCountriesVisited().data?.length;
   const getCities = useCitiesVisited();
-  const cityCount = getCities("")?.data;
+  const cityCount = getCities("")?.data
+  console.log(cityCount)
   return (
     <Box>
       <Typography p={2} variant="h5" fontWeight={"bold"}>

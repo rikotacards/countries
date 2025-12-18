@@ -20,7 +20,11 @@ export const CountryList: React.FC<CountryListProps> = ({ filter }) => {
     add.mutateAsync(countryCode);
   };
   const onRemove = async (countryCode: TCountryCode | false) => {
-    remove.mutateAsync(countryCode);
+    try {
+      remove.mutateAsync(countryCode);
+    } catch (e) {
+      console.error(e);
+    }
   };
   return (
     <List>
