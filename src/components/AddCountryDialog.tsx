@@ -5,7 +5,6 @@ import {
   IconButton,
   InputAdornment,
   TextField,
-  Typography,
 } from "@mui/material";
 import { CountryList } from "./CountryList";
 import { DialogOrDrawer } from "./DialogOrDrawer";
@@ -28,15 +27,17 @@ export const AddCountryDialog: React.FC<AddCountryDialogProps> = ({
   }, [open]);
   return (
     <DialogOrDrawer open={open} onClose={onClose}>
-      <DialogTitle sx={{ display: "flex", alignItems: "center" }}>
-        <Typography fontWeight={"bold"} variant="h5">
-          Add your visits
-        </Typography>
+      <DialogTitle
+        variant="h5"
+        fontWeight={"bold"}
+        sx={{ display: "flex", alignItems: "center" }}
+      >
+        Add your visits
         <IconButton onClick={onClose} sx={{ ml: "auto" }}>
           <Close color="action" />
         </IconButton>
       </DialogTitle>
-      <Box sx={{ p: 1, display: "flex", position: "sticky", top: 0 }}>
+      <Box sx={{ pl: 2, pr:2, display: "flex", position: "sticky", top: 0 }}>
         <TextField
           placeholder="Search for a Country"
           value={filter}
@@ -49,7 +50,7 @@ export const AddCountryDialog: React.FC<AddCountryDialogProps> = ({
                   sx={{ visibility: filter ? "visible" : "hidden" }}
                   position="end"
                 >
-                  <IconButton>
+                  <IconButton onClick={() => setFilter('')}>
                     <Cancel />
                   </IconButton>
                 </InputAdornment>

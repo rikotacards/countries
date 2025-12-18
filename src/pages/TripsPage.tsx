@@ -31,7 +31,7 @@ export const TripsPage: React.FC = () => {
         start={t.start_date}
         end={t.end_date}
         key={i}
-        countryCode={t.countryCode}
+        countryCode={t.country_code}
         name={t.name}
       />
     );

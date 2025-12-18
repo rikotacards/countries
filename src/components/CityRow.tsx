@@ -16,51 +16,51 @@ interface CityRow extends LocationRowLayoutProps {
 export const CityRow: React.FC<CityRow> = ({
   geonameid,
   countryCode,
-  locationName
+  locationName,
 }) => {
   const visited = useCitiesVisited();
   const add = useAddCity();
   const remove = useDeleteCity();
-  
-   const onAdd = (geonameid: string) => {
-      add.mutateAsync(geonameid);
-    };
-    const onRemove = (geonameid: string) => {
-      remove.mutateAsync(geonameid);
-    };
+
+  const onAdd = (geonameid: string) => {
+    add.mutateAsync({geonameid, country_code: countryCode});
+  };
+  const onRemove = (geonameid: string) => {
+    remove.mutateAsync(geonameid);
+  };
   const hasVisited = visited(countryCode).data?.find((v) => {
     return v.geonameid == geonameid;
   });
   return (
     <LocationRowLayout
-      icon={<LocationCityIcon />}
+      icon={<LocationCityIcon fontSize="small" color="disabled" />}
       key={geonameid}
       onClick={() => {
-                  if (hasVisited) {
-                    onRemove(geonameid);
-                  } else {
-                    onAdd(geonameid);
-                    // onAdd(countryCode);
-                  }
-                }}
+        if (hasVisited) {
+          onRemove(geonameid);
+        } else {
+          onAdd(geonameid);
+          // onAdd(countryCode);
+        }
+      }}
       locationName={locationName}
       disableMore
       buttons={
-            <Box>
-              <IconButton
-                onClick={() => {
-                  if (hasVisited) {
-                    onRemove(geonameid);
-                  } else {
-                    onAdd(geonameid);
-                    // onAdd(countryCode);
-                  }
-                }}
-              >
-                <CheckCircle color={hasVisited ? "success" : undefined} />
-              </IconButton>
-            </Box>
-          }
+        <Box>
+          <IconButton
+            onClick={() => {
+              if (hasVisited) {
+                onRemove(geonameid);
+              } else {
+                onAdd(geonameid);
+                // onAdd(countryCode);
+              }
+            }}
+          >
+            <CheckCircle color={hasVisited ? "success" : undefined} />
+          </IconButton>
+        </Box>
+      }
     />
   );
 };

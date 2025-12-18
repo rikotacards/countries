@@ -13,7 +13,7 @@ export const DialogOrDrawer: React.FC<DialogOrDrawerProps> = ({
   const isSmall = useIsSmall();
   if (!isSmall) {
     return (
-      <Dialog open={open} onClose={onClose}>
+      <Dialog scroll={'paper'} open={open} onClose={onClose}>
         {children}
       </Dialog>
     );

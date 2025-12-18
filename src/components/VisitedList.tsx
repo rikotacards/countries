@@ -1,5 +1,5 @@
 import { Box, List } from "@mui/material";
-import { useVisited } from "../hooks/queries/useVisited";
+import { useCountriesVisited } from "../hooks/queries/useVisited";
 import { LocationRowLayout } from "./LocationRowLayout";
 import {
   getCountryData,
@@ -13,7 +13,7 @@ interface VisitedListProps {
     onClick: (code: TCountryCode) => void;
 }
 export const VisitedList: React.FC<VisitedListProps> = ({toggleOpen, onClick}) => {
-  const visited = useVisited();
+  const visited = useCountriesVisited();
   if (visited.isLoading) {
     return <Box sx={{p:2}}>
       <ListSkeleton/>
@@ -23,13 +23,13 @@ export const VisitedList: React.FC<VisitedListProps> = ({toggleOpen, onClick}) =
     return <NoCountries toggleOpen={toggleOpen}/>
   }
   const rows = visited?.data?.map((r) => {
-    const countryObject = getCountryData(r.countryCode);
-    const emoji = getEmojiFlag(r.countryCode);
+    const countryObject = getCountryData(r.country_code);
+    const emoji = getEmojiFlag(r.country_code);
     return (
       <LocationRowLayout
-        onClick={() => onClick(r.countryCode)}
+        onClick={() => onClick(r.country_code)}
         flagImage={emoji}
-        key={r.countryCode}
+        key={r.country_code}
         locationName={countryObject.name}
       />
     );

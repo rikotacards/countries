@@ -7,14 +7,14 @@ export const useAddLocation = () => {
   const client = useQueryClient();
   const auth = useAuth();
   return useMutation({
-    mutationKey: ["visited"],
+    mutationKey: ["countriesVisited"],
     onSuccess: () => {
-      client.invalidateQueries({ queryKey: ["visited"] });
+      client.invalidateQueries({ queryKey: ["countriesVisited"] });
     },
     mutationFn: async (countryCode: TCountryCode | false) => {
       return await supabase
-        .from("visited")
-        .insert({ countryCode, user_id: auth.user?.id });
+        .from("countriesVisited")
+        .insert({ country_code: countryCode, user_id: auth.user?.id });
     },
   });
 };

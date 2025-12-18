@@ -5,25 +5,29 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import React from "react";
 import { DialogOrDrawer } from "./DialogOrDrawer";
-import { DestinationForm } from "./DestinationFrom";
+import { WhereForm } from "./WhereForm";
 import { TripDatesForm } from "./TripDatesForm";
 import { FormInput } from "./FormInput";
 import { Close } from "@mui/icons-material";
 import { useTripForm } from "../hooks/useTripForm";
 import { getCountryData, type TCountryCode } from "countries-list";
-import type { ITrip } from "../hooks/mutations/useAddTrip";
+import { useAddTrip, type ITrip } from "../hooks/mutations/useAddTrip";
 import { formatOptions } from "../utils/dateFormat";
 import { useDeleteTrip } from "../hooks/mutations/useDeleteTrip";
+import { useAddLocation } from "../hooks/mutations/useAddLocation";
+import { useAddCity } from "../hooks/mutations/useAddCity";
+import { useUpdateTrip } from "../hooks/mutations/useUpdateTrip";
 interface Arg {
   onClose: () => void;
   formData?: ITrip;
 }
-
+const vehicles = ["Plane", "Car", "Boat"];
 export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
   const [form, setForm] = React.useState("");
   const {
@@ -33,11 +37,47 @@ export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
     onSetLocation,
     start,
     end,
-    onSubmit,
     onNoteChange,
     notes,
+    vehicle,
+    onTransportChange,
   } = useTripForm(formData);
-  const countryData = getCountryData(location.countryCode as TCountryCode);
+  const addTrip = useAddTrip();
+  const addCountry = useAddLocation();
+  const addCity = useAddCity();
+  const update = useUpdateTrip();
+  const onSubmit = async () => {
+    if (!start || !end || !location.name || !location.country_code) {
+      return;
+    }
+    if (location.isCity && location.geonameid) {
+      await addCity.mutateAsync({
+        geonameid: location.geonameid,
+        country_code: location.country_code,
+      });
+    }
+    await addCountry.mutateAsync(location.country_code);
+    await addTrip.mutateAsync({
+      ...location,
+      start_date: start.toISOString(),
+      end_date: end.toISOString(),
+      notes,
+      vehicle,
+    });
+  };
+  const onUpdate = async () => {
+    if (formData && formData.id && start && end) {
+      await update.mutateAsync({
+        ...location,
+        id: formData.id,
+        start_date: start.toISOString(),
+        end_date: end.toISOString(),
+        notes,
+        vehicle,
+      });
+    }
+  };
+  const countryData = getCountryData(location.country_code as TCountryCode);
   const { name: countryName } = countryData;
   const close = () => {
     setForm("");
@@ -49,7 +89,11 @@ export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
     setForm("dates");
   };
   const submit = async () => {
-    await onSubmit();
+    if (formData) {
+      await onUpdate();
+    } else {
+      await onSubmit();
+    }
     onClose();
   };
   const deleteTrip = useDeleteTrip();
@@ -66,7 +110,6 @@ export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
   const hasValidDates = start && end;
   const title = formData ? "Trip Details" : "Add Trip";
   const actionLabel = formData ? "Update" : "Add Trip";
-  console.log("start", start);
   return (
     <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <DialogTitle
@@ -79,7 +122,7 @@ export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
           <Close />
         </IconButton>
       </DialogTitle>
-      <DialogContent sx={{ width: "500px", flexGrow: 1 }}>
+      <DialogContent sx={{ minWidth: 300, flexGrow: 1 }}>
         <FormInput
           label={"Where"}
           onClick={onOpenDestination}
@@ -100,6 +143,21 @@ export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
           }
           onClick={onOpenWhen}
         />
+        <Stack direction={"row"}>
+          {vehicles.map((v) => (
+            <Button
+              sx={{ textTransform: "capitalize" }}
+              fullWidth
+              variant={v === vehicle ? "contained" : "outlined"}
+              size="small"
+              name={"vehicle"}
+              onClick={() => onTransportChange(v)}
+            >
+              {v}
+            </Button>
+          ))}
+        </Stack>
+
         <Typography sx={{ mt: 1, mb: 1 }}>Notes</Typography>
         <TextField
           value={notes}
@@ -108,7 +166,7 @@ export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
           placeholder="Add notes or highlights"
         />
         <DialogOrDrawer onClose={close} open={form === "destination"}>
-          <DestinationForm
+          <WhereForm
             location={location}
             onSetLocation={onSetLocation}
             onClose={close}

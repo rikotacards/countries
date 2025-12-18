@@ -18,8 +18,7 @@ export const Layout: React.FC<PropsWithChildren> = () => {
   const auth = useAuth();
   const l = useLocation();
   const page = l.pathname.slice(0);
-  console.log("page", page);
-  const [selected, setSelected] = React.useState<string | null>(null);
+  const [selected, setSelected] = React.useState<string | null>('/');
   React.useEffect(() => {
     setSelected(page);
   }, [page]);
@@ -64,6 +63,7 @@ export const Layout: React.FC<PropsWithChildren> = () => {
           <Tabs value={selected}>
             {tabs.map((t) => (
               <Tab
+                key={t.path}
                 sx={{ textTransform: "capitalize" }}
                 label={t.label}
                 value={t.path}

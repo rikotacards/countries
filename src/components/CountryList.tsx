@@ -1,17 +1,19 @@
 import { Box, IconButton, List } from "@mui/material";
 import { LocationRowLayout } from "./LocationRowLayout";
-import { countries, getCountryCode, getEmojiFlag, type TCountryCode } from "countries-list";
+import { getEmojiFlag, type TCountryCode } from "countries-list";
 import { CheckCircle } from "@mui/icons-material";
 import { useAddLocation } from "../hooks/mutations/useAddLocation";
-import { useVisited } from "../hooks/queries/useVisited";
+import { useCountriesVisited } from "../hooks/queries/useVisited";
 import { useDeleteLocation } from "../hooks/mutations/useDeleteLocation";
+import { countries } from "../countries";
 interface CountryListProps {
   filter?: string;
 }
-export const CountryList: React.FC<CountryListProps> = ({filter}) => {
-  const visited = useVisited();
-  const list = Object.values(countries).map((country) => country);
-  const filteredList = list.filter((c) => !filter ? true : c.name.toLowerCase().includes(filter?.toLowerCase()))
+export const CountryList: React.FC<CountryListProps> = ({ filter }) => {
+  const visited = useCountriesVisited();
+  const filteredList = countries.filter((c) =>
+    !filter ? true : c.name.toLowerCase().includes(filter?.toLowerCase())
+  );
   const add = useAddLocation();
   const remove = useDeleteLocation();
   const onAdd = async (countryCode: TCountryCode | false) => {
@@ -23,24 +25,24 @@ export const CountryList: React.FC<CountryListProps> = ({filter}) => {
   return (
     <List>
       {filteredList.map((c) => {
-        const countryCode = getCountryCode(c.name)
-        const e = getEmojiFlag(countryCode as TCountryCode)
+        const e = getEmojiFlag(c.country_code as TCountryCode);
         const hasVisited = visited.data?.find(
-          (v) => v.countryCode === countryCode
+          (v) => v.country_code === c.country_code
         );
+        const onClick = () => {
+          if (hasVisited) {
+            onRemove(c.country_code);
+          } else {
+            onAdd(c.country_code);
+          }
+        };
         return (
           <LocationRowLayout
+            disableMore
+            onClick={onClick}
             buttons={
               <Box>
-                <IconButton
-                  onClick={() => {
-                    if (hasVisited) {
-                      onRemove(countryCode);
-                    } else {
-                      onAdd(countryCode);
-                    }
-                  }}
-                >
+                <IconButton>
                   <CheckCircle color={hasVisited ? "success" : undefined} />
                 </IconButton>
               </Box>

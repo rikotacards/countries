@@ -6,6 +6,7 @@ import { TripsPage } from "./pages/TripsPage";
 import { SettingsPage } from "./pages/SettingsPage";
 import { AuthCheck } from "./AuthCheck";
 import { LoginPage } from "./pages/LoginPage";
+import { TimeLinePage } from "./pages/TimelinePage";
 
 export const App = () => {
   return (
@@ -13,9 +14,10 @@ export const App = () => {
       <Route element={<Layout />}>
         <Route element={<AuthCheck />}>
           <Route path="/" element={<VisitedPage />} />
-          <Route path='login' element={<LoginPage/>}/>
+          <Route path="login" element={<LoginPage />} />
           <Route path={"stats"} element={<StatsPage />} />
           <Route path={"trips"} element={<TripsPage />} />
+          <Route path={"timeline"} element={<TimeLinePage />} />
           <Route path={"settings"} element={<SettingsPage />} />
         </Route>
       </Route>

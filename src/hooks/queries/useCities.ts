@@ -24,7 +24,7 @@ export const useGetCities = () => {
         // 3. Apply the remaining mandatory filters/orders
         const { data, error } = await query
           .ilike('name', `%${name}%`)
-          .order('name');
+          .order('country_code');
           
         if (error) {
           throw error;

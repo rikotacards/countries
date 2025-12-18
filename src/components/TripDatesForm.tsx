@@ -2,7 +2,9 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import React from "react";
 import {
+  Box,
   Button,
+  Collapse,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -12,6 +14,8 @@ import {
 import { Close } from "@mui/icons-material";
 import type { PickerValue } from "@mui/x-date-pickers/internals";
 import { DateCalendar } from "@mui/x-date-pickers";
+import { FormInput } from "./FormInput";
+import { formatOptions } from "../utils/dateFormat";
 interface Args {
   onClose: () => void;
   start?: PickerValue;
@@ -27,6 +31,13 @@ export const TripDatesForm: React.FC<Args> = ({
   onClose,
 }) => {
   const duration = end && start ? end.diff(start, "day") : null;
+  const startDate = start
+    ? new Date(start?.toDate())?.toLocaleDateString("en-GB", formatOptions)
+    : "";
+  const endDate = end
+    ? new Date(end?.toDate())?.toLocaleDateString("en-GB", formatOptions)
+    : "";
+  const [dialogName, setDialogName] = React.useState("");
   return (
     <>
       <DialogTitle
@@ -40,29 +51,52 @@ export const TripDatesForm: React.FC<Args> = ({
         </IconButton>
       </DialogTitle>
       <DialogContent sx={{ display: "flex", flexDirection: "column" }}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Typography sx={{ textAlign: "center" }} fontWeight={"bold"}>
-            Start date
-          </Typography>
-          <DateCalendar
-            disableHighlightToday
-            value={start}
-            onChange={(newValue) => onSetStart(newValue)}
-            sx={{ mb: 1 }}
-          />
-          <Typography sx={{ textAlign: "center" }} fontWeight={"bold"}>
-            End date
-          </Typography>
-          <DateCalendar
-            disableHighlightToday
-            sx={{ mb: 1 }}
-            value={end}
-            onChange={(newValue) => {
-              onSetEnd(newValue);
+        <FormInput
+          onClick={() => {
+            setDialogName("start");
+          }}
+          label="Add Start"
+          value={startDate}
+        >
+          <Collapse in={dialogName === "start"}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateCalendar
+                disableHighlightToday
+                value={start}
+                onChange={(newValue) => {
+                  onSetStart(newValue);
+                  setDialogName("");
+                }}
+              />
+            </LocalizationProvider>
+          </Collapse>
+        </FormInput>
+        <Box sx={{ mt: 1 }}>
+          <FormInput
+            onClick={() => {
+              setDialogName("end");
             }}
+            label="Add end"
+            value={endDate}
           />
-        </LocalizationProvider>
-        {!!duration && <Typography>{duration} days</Typography>}
+        </Box>
+
+        <Collapse in={dialogName === "end"}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DateCalendar
+              disableHighlightToday
+              sx={{ mb: 1 }}
+              value={end}
+              onChange={(newValue) => {
+                onSetEnd(newValue);
+                setDialogName("");
+              }}
+            />
+          </LocalizationProvider>
+        </Collapse>
+        {!!duration && (
+          <Typography sx={{ textAlign: "center" }}>{duration} days</Typography>
+        )}
       </DialogContent>
       <DialogActions>
         <Button fullWidth onClick={onClose} variant="contained">

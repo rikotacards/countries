@@ -1,13 +1,13 @@
 import type { PickerValue } from "@mui/x-date-pickers/internals";
 import React from "react";
-import { useAddTrip, type ITrip } from "./mutations/useAddTrip";
+import { type ITrip } from "./mutations/useAddTrip";
 import type { TCountryCode } from "countries-list";
 import dayjs from "dayjs";
-import { useUpdateTrip } from "./mutations/useUpdateTrip";
 export interface LocationProps {
   geonameid?: string;
   name: string;
-  countryCode: TCountryCode;
+  country_code: TCountryCode;
+  isCity?: boolean;
 }
 const convertIsoToPickerValue = (isoString?: string) => {
   // Check if the string is valid/present before attempting conversion
@@ -19,11 +19,9 @@ const convertIsoToPickerValue = (isoString?: string) => {
   return dayjs(isoString);
 };
 export const useTripForm = (formData?: ITrip) => {
-  const submit = useAddTrip();
-  const update = useUpdateTrip();
   const [location, setLocation] = React.useState({
     name: formData?.name,
-    countryCode: formData?.countryCode,
+    country_code: formData?.country_code,
   } as LocationProps);
   const onSetLocation = (location: LocationProps) => {
     setLocation(location);
@@ -34,6 +32,7 @@ export const useTripForm = (formData?: ITrip) => {
   const [end, setEnd] = React.useState<PickerValue | null>(
     convertIsoToPickerValue(formData?.end_date)
   );
+
   const [notes, setNotes] = React.useState(formData?.notes);
   const onNoteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNotes(e.target.value);
@@ -44,26 +43,9 @@ export const useTripForm = (formData?: ITrip) => {
   const onSetEnd = (date: PickerValue) => {
     setEnd(date);
   };
-  const onSubmit = async () => {
-    if (!start || !end || !location.name || !location.countryCode) {
-      return;
-    }
-    if (formData && formData.id) {
-      await update.mutateAsync({
-        ...location,
-        start_date: start.toISOString(),
-        end_date: end.toISOString(),
-        notes,
-        id: formData.id,
-      });
-    } else {
-      await submit.mutateAsync({
-        ...location,
-        start_date: start.toISOString(),
-        end_date: end.toISOString(),
-        notes,
-      });
-    }
+  const [vehicle, setTransport] = React.useState(formData?.vehicle);
+  const onTransportChange = (v: string) => {
+    setTransport(v);
   };
   return {
     start,
@@ -71,10 +53,10 @@ export const useTripForm = (formData?: ITrip) => {
     onSetEnd,
     onSetLocation,
     location,
+    onTransportChange,
+    vehicle,
     onSetStart,
-    onSubmit,
     notes,
     onNoteChange,
-    submitLoading: submit.isPending,
   };
 };

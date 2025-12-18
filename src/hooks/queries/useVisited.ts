@@ -1,16 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import supabase from "../../utils/supabase";
 
-export const useVisited = () => {
+export const useCountriesVisited = () => {
   const queryFn = async () => {
-    const {data, error} = await supabase.from("visited").select();
+    const {data, error} = await supabase.from("countriesVisited").select();
     if(error){
         throw error
     }
     return data
   };
   const q = useQuery({
-    queryKey: ["visited"],
+    queryKey: ["countriesVisited"],
     queryFn
   });
   return q;

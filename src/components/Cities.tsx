@@ -3,7 +3,7 @@ import { AddCityDialog } from "./AddCityDialog";
 import React from "react";
 import { useCitiesVisited } from "../hooks/queries/useCitiesVisited";
 import { CityRow } from "./CityRow";
-import { Add } from "@mui/icons-material";
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 interface CitiesProps {
   countryCode: string;
 }
@@ -31,10 +31,10 @@ export const Cities: React.FC<CitiesProps> = ({ countryCode }) => {
     );
   });
   return (
-    <Box sx={{ p: 0 }}>
-      <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-        <Typography fontWeight={'bold'} variant="body1">Visited Cities: {rows?.length}</Typography>
-        <IconButton color="primary" onClick={onOpen}><Add/></IconButton>
+    <Box>
+      <Box sx={{p:2, display: "flex", flexDirection: "row", alignItems: "center" }}>
+        <Typography variant="body1">Visited Cities: {rows?.length}</Typography>
+        <IconButton sx={{ml:'auto'}} color="primary" onClick={onOpen}><AddCircleRoundedIcon/></IconButton>
       </Box>
       <List>{rows}</List>
       <AddCityDialog countryCode={countryCode} onClose={onClose} open={open} />

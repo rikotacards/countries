@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  Typography,
+  Toolbar,
 } from "@mui/material";
 import {
   getCountryData,
@@ -20,28 +20,22 @@ export const LocationPage: React.FC<LocationPageProps> = ({
   countryCode,
   onClose,
 }) => {
-  console.log('c', countryCode)
   const o = getCountryData(countryCode as TCountryCode);
   const { name } = o;
-  const emoji = getEmojiFlag(o.iso2);
+  const emoji = getEmojiFlag(countryCode as TCountryCode);
   return (
     <Box>
-      <DialogTitle
+      <Toolbar
         sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
       >
-        <IconButton sx={{position: 'absolute'}} onClick={onClose}>
+        <IconButton onClick={onClose}>
           <ArrowBackIosNew />
         </IconButton>
-
-        <Typography
-          variant="h6"
-          fontWeight={"bold"}
-          sx={{ flexGrow: 1, textAlign: "center" }}
-        >
+        <DialogTitle fontWeight={"bold"} variant="h5">
           {emoji} {name}
-        </Typography>
-      </DialogTitle>
-      <DialogContent sx={{ width: 500 }}>
+        </DialogTitle>
+      </Toolbar>
+      <DialogContent sx={{ p: 0 }}>
         <Cities countryCode={countryCode || ""} />
       </DialogContent>
     </Box>

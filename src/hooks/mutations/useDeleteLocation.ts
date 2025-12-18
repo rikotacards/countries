@@ -6,10 +6,10 @@ export const useDeleteLocation = () => {
   const client = useQueryClient();
   return useMutation({
     onSuccess: () => {
-      client.invalidateQueries({queryKey: ['visited']});
+      client.invalidateQueries({queryKey: ["countriesVisited"]});
     },
     mutationFn: async (countryCode: TCountryCode | false) => {
-      await supabase.from("visited").delete().eq("countryCode", countryCode);
+      await supabase.from("countriesVisited").delete().eq("country_code", countryCode);
     },
   });
 };

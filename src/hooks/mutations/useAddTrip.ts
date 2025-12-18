@@ -3,7 +3,7 @@ import supabase from "../../utils/supabase";
 import type { TCountryCode } from "countries-list";
 import { useAuth } from "../../providers/contexts/authContext";
 export interface ITrip {
-  countryCode: TCountryCode;
+  country_code: TCountryCode;
   start_date: string;
   end_date: string;
   notes?: string;
@@ -11,6 +11,7 @@ export interface ITrip {
   geonameid?: string;
   name: string;
   id?: string;
+  
 }
 export const useAddTrip = () => {
   const client = useQueryClient();

@@ -41,7 +41,10 @@ export const TripRow: React.FC<TripRowProps> = ({
     dayjs(new Date(start)),
     "day"
   );
-  const duration = `${startDate} - ${endDate}, ${durationCount} days`;
+  const duration = <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+    <Typography variant='caption'>{`${startDate} - ${endDate}`}</Typography>
+    <Typography color='textPrimary' variant="caption" sx={{ml:1}}>{durationCount} Days</Typography>
+  </Box>
   const location = (
     <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
       <Typography fontWeight={"bold"}>{name}</Typography>

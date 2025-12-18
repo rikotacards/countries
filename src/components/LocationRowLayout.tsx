@@ -43,12 +43,11 @@ export const LocationRowLayout: React.FC<LocationRowLayoutProps> = ({
       <ListItemText
         primary={locationName}
         secondary={secondaryText}
-        sx={{ fontWeight: "bold" }}
       >
         {locationName}
       </ListItemText>
       {buttons}
-      {visited && <CheckCircleIcon />}
+      {visited && <CheckCircleIcon sx={{ ml: "auto" }} />}
       {!disableMore && (
         <IconButton>
           <ChevronRight />

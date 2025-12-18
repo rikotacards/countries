@@ -1,10 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { StatLayout } from "../components/StatLayout";
-import { useVisited } from "../hooks/queries/useVisited";
+import { useCountriesVisited } from "../hooks/queries/useVisited";
 import { useCitiesVisited } from "../hooks/queries/useCitiesVisited";
 
 export const StatsPage: React.FC = () => {
-  const countryCount = useVisited().data?.length;
+  const countryCount = useCountriesVisited().data?.length;
   const getCities = useCitiesVisited();
   const cityCount = getCities("")?.data;
   return (

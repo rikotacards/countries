@@ -20,6 +20,7 @@ export const AddCityDialog: React.FC<AddCountryDialogProps> = ({
   onClose,
   countryCode,
 }) => {
+  console.log('c', countryCode)
   const [filter, setFilter] = React.useState("");
   const debounce = useDebounce(filter);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +48,7 @@ export const AddCityDialog: React.FC<AddCountryDialogProps> = ({
         onChange={onChange}
         fullWidth
       />
-      <DialogContent sx={{width:500}}>
+      <DialogContent  sx={{p:0}}>
         <CityList countryCode={countryCode} filter={debounce} />
       </DialogContent>
     </DialogOrDrawer>
