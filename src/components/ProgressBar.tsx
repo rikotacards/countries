@@ -10,7 +10,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ value = 0 }) => {
       sx={{ m: 2, display: "flex", flexDirection: "row", alignItems: "center" }}
     >
       <LinearProgress
-        sx={{ width: "100%" }}
+        sx={{ width: "100%",height: 6 }}
         variant="determinate"
         value={value}
         color='success'
