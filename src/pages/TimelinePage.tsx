@@ -7,42 +7,33 @@ import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import { Box, Typography } from "@mui/material";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
+import { useTrips } from "../hooks/queries/useTrips";
+import { formatOptions } from "../utils/dateFormat";
 
-export const TimeLinePage: React.FC = () => (
-  <Box>
-    <Typography sx={{ alignSelf: "center" }}>2025</Typography>
-    <Timeline position="right">
+export const TimeLinePage: React.FC = () => {
+  const countriesVisited = useTrips();
+  const line = countriesVisited.data?.map((trip, i) => {
+    return (
       <TimelineItem>
         <TimelineOppositeContent color="text.secondary">
-          Dec 16 2024
+          <Typography variant="caption">
+            {new Date(trip.start_date).toLocaleDateString(
+              "en-GB",
+              formatOptions
+            )}
+          </Typography>
         </TimelineOppositeContent>
         <TimelineSeparator>
-          <TimelineDot color="secondary" />
-          <TimelineConnector />
+          <TimelineDot color="primary" />
+          {i !== countriesVisited?.data.length - 1 && <TimelineConnector />}
         </TimelineSeparator>
-        <TimelineContent>Norway</TimelineContent>
+        <TimelineContent>{trip.name}</TimelineContent>
       </TimelineItem>
-      <TimelineItem>
-        <TimelineOppositeContent color="text.secondary">
-          Dec 20 2024
-        </TimelineOppositeContent>
-        <TimelineSeparator>
-          <TimelineDot color="success" />
-        </TimelineSeparator>
-        <TimelineContent>Finland</TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineOppositeContent color="text.secondary">
-          Dec 20 2024
-        </TimelineOppositeContent>
-
-        <TimelineSeparator>
-          <TimelineConnector />
-
-          <TimelineDot color="success" />
-        </TimelineSeparator>
-        <TimelineContent>Finland</TimelineContent>
-      </TimelineItem>
-    </Timeline>
-  </Box>
-);
+    );
+  });
+  return (
+    <Box>
+      <Timeline position="right">{line}</Timeline>
+    </Box>
+  );
+};

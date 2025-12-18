@@ -6,10 +6,8 @@ export const useCitiesVisited = () => {
     useQuery({
       queryKey: ["citiesVisited", country_code],
       queryFn: async () => {
-        const { data, error } = await supabase
-          .from("citiesVisited")
-          .select(
-            `
+        let q = supabase.from("citiesVisited").select(
+          `
             id, 
             cities ( 
               name,
@@ -17,8 +15,11 @@ export const useCitiesVisited = () => {
               country_code
             )
           `
-          )
-          .eq("cities.country_code", country_code);
+        );
+        if (country_code) {
+          q = q.eq("country_code", country_code);
+        }
+        const { data, error } = await q
         if (error) {
           throw error;
         }

@@ -27,7 +27,7 @@ interface Arg {
   onClose: () => void;
   formData?: ITrip;
 }
-const vehicles = ["Plane", "Car", "Boat"];
+const vehicles = ["Plane", "Car", "Train", "Boat"];
 export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
   const [form, setForm] = React.useState("");
   const {

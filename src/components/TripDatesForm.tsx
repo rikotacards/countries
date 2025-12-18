@@ -37,7 +37,7 @@ export const TripDatesForm: React.FC<Args> = ({
   const endDate = end
     ? new Date(end?.toDate())?.toLocaleDateString("en-GB", formatOptions)
     : "";
-  const [dialogName, setDialogName] = React.useState("");
+  const [dialogName, setDialogName] = React.useState("start");
   return (
     <>
       <DialogTitle
@@ -78,22 +78,23 @@ export const TripDatesForm: React.FC<Args> = ({
             }}
             label="Add end"
             value={endDate}
-          />
+          >
+            <Collapse in={dialogName === "end"}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateCalendar
+                  disableHighlightToday
+                  sx={{ mb: 1 }}
+                  value={end}
+                  onChange={(newValue) => {
+                    onSetEnd(newValue);
+                    setDialogName("");
+                  }}
+                />
+              </LocalizationProvider>
+            </Collapse>
+          </FormInput>
         </Box>
 
-        <Collapse in={dialogName === "end"}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar
-              disableHighlightToday
-              sx={{ mb: 1 }}
-              value={end}
-              onChange={(newValue) => {
-                onSetEnd(newValue);
-                setDialogName("");
-              }}
-            />
-          </LocalizationProvider>
-        </Collapse>
         {!!duration && (
           <Typography sx={{ textAlign: "center" }}>{duration} days</Typography>
         )}
