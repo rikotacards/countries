@@ -3,7 +3,7 @@ import supabase from "../../utils/supabase";
 
 export const useTrips = () => {
   const queryFn = async () => {
-    const {data, error} = await supabase.from("trips").select().order('created_at', {ascending: false})
+    const {data, error} = await supabase.from("trips").select().order('start_date', {ascending: true})
     if(error){
         throw error
     }
