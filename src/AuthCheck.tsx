@@ -1,6 +1,6 @@
 import { Outlet, useLocation, useNavigate } from "react-router";
 import { useAuth } from "./providers/contexts/authContext";
-import { LinearProgress } from "@mui/material";
+import { Box, CircularProgress, LinearProgress } from "@mui/material";
 
 export const AuthCheck: React.FC = () => {
   const auth = useAuth();
@@ -8,10 +8,25 @@ export const AuthCheck: React.FC = () => {
   const l = useLocation();
   const page = l.pathname.slice(0);
   if (auth.loading) {
-    return <LinearProgress />;
+    return (
+      <Box
+        sx={{
+          position: "absolute",
+          top: "50%",
+          width: "100%",
+          display: 'flex',
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
   if (!auth.user && page !== "/login") {
     nav("login");
+  }
+  if (auth.user && page == "/login") {
+    nav("/");
   }
   return <Outlet />;
 };
