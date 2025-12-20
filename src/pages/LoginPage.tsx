@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Divider, Typography } from "@mui/material";
 import { useSignInWithGoogle } from "../hooks/mutations/useSignInWithGoogle";
 export const LoginPage: React.FC = () => {
   const login = useSignInWithGoogle();
@@ -13,12 +13,12 @@ export const LoginPage: React.FC = () => {
         justifyContent: "center",
         alignItems: "center",
         width: "100vw",
-        height:'100%'
+        height: "100%",
       }}
     >
       <Box
         sx={{
-          flexGrow:1,
+          flexGrow: 1,
           // Optional: Add a max-width to prevent the content from stretching too wide
           maxWidth: 400,
           width: "100%",
@@ -28,16 +28,18 @@ export const LoginPage: React.FC = () => {
           p: 2,
         }}
       >
-        <Typography fontWeight={"bold"} textAlign={"center"}>
+        <Typography variant="h3" fontWeight={"bold"} textAlign={"center"}>
           Welcome to Countries.fyi
         </Typography>
-        <Typography textAlign={"center"}>
+        <Divider sx={{ m: 2 }} />
+        <Typography variant="h5" textAlign={"center"}>
           Track of all countries and cities you've traveled to.
         </Typography>
 
         <Button
           sx={{ mt: 1, textTransform: "capitalize" }}
           variant="contained"
+          size="large"
           onClick={() => onLogin()}
         >
           Log in with Google

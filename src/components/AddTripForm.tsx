@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Chip,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -149,20 +150,19 @@ export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
         />
         <Stack direction={"row"}>
           {vehicles.map((v) => (
-            <Button
-              sx={{ textTransform: "capitalize" }}
-              fullWidth
-              variant={v === vehicle ? "contained" : "outlined"}
-              size="small"
-              name={"vehicle"}
+            <Chip
+              sx={{ mr: 1, textTransform: "capitalize" }}
+              label={v}
+              size="medium"
+              color={vehicle == v ? "primary" : undefined}
               onClick={() => onTransportChange(v)}
-            >
-              {v}
-            </Button>
+            />
           ))}
         </Stack>
 
-        <Typography sx={{ mt: 1, mb: 1 }}>Notes</Typography>
+        <Typography color="textSecondary" sx={{ mt: 2, mb: 1 }}>
+          Notes
+        </Typography>
         <TextField
           value={notes}
           onChange={onNoteChange}
@@ -209,7 +209,7 @@ export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
           )}
           <Button
             onClick={onClose}
-            sx={{ m: 1, textTransform: "capitalize" }}
+            sx={{ mt: 1, textTransform: "capitalize" }}
             size="large"
             variant="text"
             fullWidth

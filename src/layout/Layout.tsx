@@ -16,9 +16,10 @@ import React from "react";
 export const Layout: React.FC<PropsWithChildren> = () => {
   const nav = useNavigate();
   const auth = useAuth();
+  const isLoggedIn = auth.session?.user;
   const l = useLocation();
   const page = l.pathname.slice(0);
-  const [selected, setSelected] = React.useState<string | null>('/');
+  const [selected, setSelected] = React.useState<string | null>("/");
   React.useEffect(() => {
     setSelected(page);
   }, [page]);
@@ -81,6 +82,7 @@ export const Layout: React.FC<PropsWithChildren> = () => {
                 color: t.palette.primary.main,
                 height: "30px",
                 width: "30px",
+                visibility: isLoggedIn ? "visible" : "hidden",
               })}
             />
           </IconButton>

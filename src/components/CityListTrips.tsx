@@ -37,6 +37,7 @@ export const CityListTrips: React.FC<CountryAndCityListProps> = React.memo(
             onClick({isCity: true, country_code: d.countryCode, name: d.name, geonameid: d.geonameId });
             onClose();
           }}
+          disableMore
           flagImage={e}
           icon={!e && <LocationCity />}
           key={`${d.countryCode}+${d.name}+${i}`}

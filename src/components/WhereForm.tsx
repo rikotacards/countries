@@ -2,6 +2,7 @@ import {
   Box,
   DialogContent,
   DialogTitle,
+  Divider,
   IconButton,
   Tab,
   Tabs,
@@ -59,6 +60,7 @@ export const WhereForm: React.FC<DestinationFormProps> = ({
           value={1}
         />
       </Tabs>
+      <Divider />
       <TextField
         placeholder="Search"
         sx={{ p: 1 }}
@@ -66,7 +68,7 @@ export const WhereForm: React.FC<DestinationFormProps> = ({
         value={text}
         onChange={onChange}
       />
-      <DialogContent sx={{p:0}}>
+      <DialogContent sx={{ p: 0 }}>
         {tab === 0 && (
           <CountryListTrips
             onClick={onSetLocation}

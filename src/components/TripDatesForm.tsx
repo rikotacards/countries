@@ -65,7 +65,7 @@ export const TripDatesForm: React.FC<Args> = ({
                 value={start}
                 onChange={(newValue) => {
                   onSetStart(newValue);
-                  setDialogName("");
+                  setDialogName("end");
                 }}
               />
             </LocalizationProvider>
@@ -96,12 +96,12 @@ export const TripDatesForm: React.FC<Args> = ({
         </Box>
 
         {!!duration && (
-          <Typography sx={{ textAlign: "center" }}>{duration} days</Typography>
+          <Typography fontWeight={'bold'} sx={{ textAlign: "center" }}>{duration} days</Typography>
         )}
       </DialogContent>
       <DialogActions>
         <Button fullWidth onClick={onClose} variant="contained">
-          Add
+          Done
         </Button>
       </DialogActions>
     </>
