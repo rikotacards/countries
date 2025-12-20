@@ -17,7 +17,7 @@ export const LoginPage: React.FC = () => {
         justifyContent: "center",
         alignItems: "center",
         width: "100vw",
-        minHeight: "80vh",
+        minHeight: "70vh",
         p:2,
         // Using a dark background often makes "sunset" gradients pop more
         backgroundColor: "background.default", 
