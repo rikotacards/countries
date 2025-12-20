@@ -1,32 +1,49 @@
-import { Box, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Paper,
+  Skeleton,
+  Typography,
+  type TypographyProps,
+} from "@mui/material";
 interface StatLayoutProps {
   stat: string;
   desc: string;
+  isLoading?: boolean;
+  textColor?: TypographyProps["color"];
 }
-export const StatLayout: React.FC<StatLayoutProps> = ({ stat, desc }) => {
+export const StatLayout: React.FC<StatLayoutProps> = ({
+  textColor,
+  isLoading,
+  stat,
+  desc,
+}) => {
   return (
     <Box
-    component={Paper}
+      component={Paper}
       sx={{
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        width:'100%',
-        flexGrow:1,
-        m:1,
-        p:1
+        flexGrow: 1,
+        m: 1,
+        width: "100%",
+        p: 1,
       }}
     >
-      <Typography
-        sx={{ textAlign: "center" }}
-        fontWeight={"bold"}
-        color="primary"
-        variant="h6"
-      >
-        {stat}
-      </Typography>
-      <Typography color="textSecondary" variant="body2">
+      {isLoading ? (
+        <Skeleton variant="text" />
+      ) : (
+        <Typography
+          sx={{ textAlign: "center" }}
+          fontWeight={"bold"}
+          color={textColor || "primary"}
+          variant="h6"
+        >
+          {stat}
+        </Typography>
+      )}
+      <Typography color="textSecondary" variant="caption">
         {desc}
       </Typography>
     </Box>

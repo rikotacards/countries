@@ -45,7 +45,7 @@ export const TimeLinePage: React.FC = () => {
 
         <TimelineContent sx={{ mt: 1, display: "flex", flexDirection: "row" }}>
           {getEmojiFlag(trip.country_code)}
-          <Typography sx={{ ml: 1 }}>{trip.name}</Typography>
+          <Typography variant='body2' sx={{ ml: 1 }}>{trip.name}</Typography>
         </TimelineContent>
       </TimelineItem>
     );

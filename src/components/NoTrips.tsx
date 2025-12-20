@@ -14,12 +14,12 @@ export const NoTrips: React.FC<NoTripsProps> = ({ toggleOpen }) => {
         cursor: "pointer",
       }}
     >
-      <Typography fontWeight={"bold"} variant="body1" color="textSecondary">
+      <Typography fontWeight={"bold"} variant="body1" color="textPrimary">
         No trips logged!
       </Typography>
       <Box>
         <Typography variant="body1" color="textSecondary">
-          Tap here or the search bar to add a trip
+          Tap here or the + button to add a trip.
         </Typography>
       </Box>
     </Box>

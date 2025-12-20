@@ -14,12 +14,12 @@ export const NoCountries: React.FC<NoTripsProps> = ({ toggleOpen }) => {
         cursor: "pointer",
       }}
     >
-      <Typography fontWeight={"bold"} variant="body1" color="textSecondary">
-        No countries logged!
+      <Typography fontWeight={"bold"} variant="body1" color="textPrimary">
+        No countries logged
       </Typography>
       <Box>
         <Typography variant="body1" color="textSecondary">
-          Tap here or the + button to add a trip
+          Tap here or the + button to add a country.
         </Typography>
       </Box>
     </Box>

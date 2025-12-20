@@ -12,7 +12,6 @@ import type { PropsWithChildren } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router";
 import { useAuth } from "../providers/contexts/authContext";
 import React from "react";
-
 export const Layout: React.FC<PropsWithChildren> = () => {
   const nav = useNavigate();
   const auth = useAuth();
@@ -61,7 +60,7 @@ export const Layout: React.FC<PropsWithChildren> = () => {
         }}
       >
         <Toolbar variant="dense" sx={{ display: "flex", flexDirection: "row" }}>
-          <Tabs value={selected}>
+          <Tabs  value={selected}>
             {tabs.map((t) => (
               <Tab
                 key={t.path}

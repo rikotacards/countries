@@ -1,0 +1,28 @@
+/* App.css */
+.sunset-text {
+  /* Create the sunset gradient colors */
+  background: linear-gradient(
+    to right,
+    #ff512f, /* Deep Orange */
+    #dd2476, /* Pinkish Red */
+    #ffac33, /* Warm Yellow */
+    #ff512f  /* Loop back to Deep Orange */
+  );
+  
+  /* Make the background big enough to animate movement */
+  background-size: 300% auto;
+  
+  /* Clip the background to the text and make text transparent */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  /* The animation */
+  animation: sunset-shift 5s ease-infinite;
+}
+
+@keyframes sunset-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
