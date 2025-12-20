@@ -24,11 +24,29 @@ import { useDeleteTrip } from "../hooks/mutations/useDeleteTrip";
 import { useAddLocation } from "../hooks/mutations/useAddLocation";
 import { useAddCity } from "../hooks/mutations/useAddCity";
 import { useUpdateTrip } from "../hooks/mutations/useUpdateTrip";
+import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
+import TrainIcon from '@mui/icons-material/Train';
+import DirectionsBoatIcon from '@mui/icons-material/DirectionsBoat';
+import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
 interface Arg {
   onClose: () => void;
   formData?: ITrip;
 }
-const vehicles = ["Plane", "Car", "Train", "Boat"];
+const vehicles = [
+  {
+    label: "Plane",
+    icon: <AirplanemodeActiveIcon />,
+  },
+  {
+    label: "Train",
+    icon: <TrainIcon/>,
+  },
+  {
+    label: "Boat",
+    icon: <DirectionsBoatIcon/>
+  },
+  { label: "Car", icon: <DirectionsCarFilledIcon/> },
+];
 export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
   const [form, setForm] = React.useState("");
   const {
@@ -152,10 +170,11 @@ export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
           {vehicles.map((v) => (
             <Chip
               sx={{ mr: 1, textTransform: "capitalize" }}
-              label={v}
+              label={v.label}
               size="medium"
-              color={vehicle == v ? "primary" : undefined}
-              onClick={() => onTransportChange(v)}
+              icon={v.icon}
+              color={vehicle == v.label ? "primary" : undefined}
+              onClick={() => onTransportChange(v.label)}
             />
           ))}
         </Stack>
@@ -203,6 +222,7 @@ export const AddTripForm: React.FC<Arg> = ({ formData, onClose }) => {
               sx={{ m: 1, textTransform: "capitalize" }}
               size="large"
               variant="outlined"
+              color="error"
             >
               Delete
             </Button>

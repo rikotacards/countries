@@ -8,6 +8,8 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+  Tab,
+  Tabs,
   Toolbar,
 } from "@mui/material";
 import {
@@ -18,6 +20,7 @@ import {
 import { Cities } from "../components/Cities";
 import React from "react";
 import { useDeleteLocation } from "../hooks/mutations/useDeleteLocation";
+import { TripsPage } from "./TripsPage";
 interface LocationPageProps {
   countryCode?: TCountryCode;
   onClose: () => void;
@@ -42,6 +45,8 @@ export const LocationPage: React.FC<LocationPageProps> = ({
   const o = getCountryData(countryCode as TCountryCode);
   const { name } = o;
   const emoji = getEmojiFlag(countryCode as TCountryCode);
+  const [tab, setTab] = React.useState(0);
+
   return (
     <Box>
       <Toolbar
@@ -97,8 +102,13 @@ export const LocationPage: React.FC<LocationPageProps> = ({
           <ListItemText>Delete</ListItemText>
         </MenuItem>
       </Menu>
+      <Tabs  value={tab} variant="fullWidth">
+        <Tab sx={{ textTransform: "capitalize" }} onClick={() => setTab(0)} value={0} label="cities" />
+        <Tab sx={{ textTransform: "capitalize" }} onClick={() => setTab(1)} label="Trips" />
+      </Tabs>
       <DialogContent sx={{ p: 0 }}>
-        <Cities countryCode={countryCode || ""} />
+       {tab == 0 && <Cities countryCode={countryCode || ""} />}
+       {tab == 1 && <TripsPage countryCode={countryCode} />}
       </DialogContent>
     </Box>
   );

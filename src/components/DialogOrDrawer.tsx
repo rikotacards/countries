@@ -24,7 +24,7 @@ export const DialogOrDrawer: React.FC<DialogOrDrawerProps> = ({
           paper: {
             sx: {
               // Example: Full height minus 100px
-              height: "calc(100%)",
+              height: "100%",
               // Example: Start 100px from the top
             },
           },

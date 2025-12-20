@@ -7,8 +7,12 @@ import { useTrips } from "../hooks/queries/useTrips";
 import { NoTrips } from "../components/NoTrips";
 import { TripRow } from "../components/TripRow";
 import type { ITrip } from "../hooks/mutations/useAddTrip";
-
-export const TripsPage: React.FC = () => {
+import { ListSkeleton } from "../components/ListSkeleton";
+import type { TCountryCode } from "countries-list";
+interface TripsPageProps {
+  countryCode?: TCountryCode;
+}
+export const TripsPage: React.FC<TripsPageProps> = ({ countryCode }) => {
   const [selected, setSelected] = React.useState<ITrip | undefined>();
   const [open, setOpen] = React.useState(false);
   const toggleOpen = () => {
@@ -17,7 +21,7 @@ export const TripsPage: React.FC = () => {
       setSelected(undefined);
     }
   };
-  const trips = useTrips();
+  const trips = useTrips(countryCode);
   const onRowClick = (arg: ITrip) => {
     toggleOpen();
     setSelected(arg);
@@ -36,6 +40,13 @@ export const TripsPage: React.FC = () => {
       />
     );
   });
+  if (trips.isLoading) {
+    return (
+      <Box sx={{ p: 2 }}>
+        <ListSkeleton />
+      </Box>
+    );
+  }
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Box
@@ -49,7 +60,11 @@ export const TripsPage: React.FC = () => {
         <Typography variant="h5" fontWeight={"bold"} pl={2}>
           Trips
         </Typography>
-        <IconButton  color='primary' sx={{ ml: "auto", mr: 2 }} onClick={toggleOpen}>
+        <IconButton
+          color="primary"
+          sx={{ ml: "auto", mr: 2 }}
+          onClick={toggleOpen}
+        >
           <Add />
         </IconButton>
       </Box>

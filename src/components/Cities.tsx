@@ -3,7 +3,9 @@ import { AddCityDialog } from "./AddCityDialog";
 import React from "react";
 import { useCitiesVisited } from "../hooks/queries/useCitiesVisited";
 import { CityRow } from "./CityRow";
-import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
+import { NoCities } from "./NoCities";
+import { ListSkeleton } from "./ListSkeleton";
 interface CitiesProps {
   countryCode: string;
 }
@@ -17,6 +19,13 @@ export const Cities: React.FC<CitiesProps> = ({ countryCode }) => {
   };
   const getVisited = useCitiesVisited();
   const visited = getVisited(countryCode);
+  if (visited.isLoading) {
+    return (
+      <Box sx={{ p: 2 }}>
+        <ListSkeleton />
+      </Box>
+    );
+  }
   const rows = visited.data?.map((v) => {
     if (!v?.name) {
       return undefined;
@@ -30,13 +39,30 @@ export const Cities: React.FC<CitiesProps> = ({ countryCode }) => {
       />
     );
   });
+  const hasVisited = !!visited.data?.length;
   return (
     <Box>
-      <Box sx={{p:2, display: "flex", flexDirection: "row", alignItems: "center" }}>
-        <Typography variant="body1">Visited Cities: {rows?.length}</Typography>
-        <IconButton sx={{ml:'auto'}} color="primary" onClick={onOpen}><AddCircleRoundedIcon/></IconButton>
+      <Box
+        sx={{
+          p: 2,
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <Typography fontWeight={"bold"} variant="h4">
+          
+          {rows?.length}
+        </Typography>
+        <Typography variant='h6' color="textSecondary" fontWeight={"bold"} sx={{ ml: 1 }}>
+          visited
+        </Typography>
+        <IconButton sx={{ ml: "auto" }} color="primary" onClick={onOpen}>
+          <AddCircleRoundedIcon />
+        </IconButton>
       </Box>
-      <List>{rows}</List>
+      {hasVisited && <List>{rows}</List>}
+      {!hasVisited && <NoCities toggleOpen={onOpen} />}
       <AddCityDialog countryCode={countryCode} onClose={onClose} open={open} />
     </Box>
   );

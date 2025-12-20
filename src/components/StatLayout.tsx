@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 interface StatLayoutProps {
   stat: string;
   desc: string;
@@ -6,11 +6,16 @@ interface StatLayoutProps {
 export const StatLayout: React.FC<StatLayoutProps> = ({ stat, desc }) => {
   return (
     <Box
+    component={Paper}
       sx={{
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        width:'100%',
+        flexGrow:1,
+        m:1,
+        p:1
       }}
     >
       <Typography

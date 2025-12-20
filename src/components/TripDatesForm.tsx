@@ -96,11 +96,13 @@ export const TripDatesForm: React.FC<Args> = ({
         </Box>
 
         {!!duration && (
-          <Typography fontWeight={'bold'} sx={{ textAlign: "center" }}>{duration} days</Typography>
+          <Typography fontWeight={"bold"} sx={{ textAlign: "center" }}>
+            {duration} days
+          </Typography>
         )}
       </DialogContent>
       <DialogActions>
-        <Button fullWidth onClick={onClose} variant="contained">
+        <Button sx={{ m: 2 }} fullWidth onClick={onClose} variant="contained">
           Done
         </Button>
       </DialogActions>

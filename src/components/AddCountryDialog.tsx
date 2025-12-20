@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { CountryList } from "./CountryList";
 import { DialogOrDrawer } from "./DialogOrDrawer";
-import { Cancel, Close } from "@mui/icons-material";
+import { Cancel, Close, Search } from "@mui/icons-material";
 import React from "react";
 interface AddCountryDialogProps {
   open: boolean;
@@ -43,8 +43,10 @@ export const AddCountryDialog: React.FC<AddCountryDialogProps> = ({
           value={filter}
           onChange={onChange}
           fullWidth
+          size='small'
           slotProps={{
             input: {
+              startAdornment: <InputAdornment position="start"><Search fontSize="small" color='disabled'/></InputAdornment>,
               endAdornment: (
                 <InputAdornment
                   sx={{ visibility: filter ? "visible" : "hidden" }}
