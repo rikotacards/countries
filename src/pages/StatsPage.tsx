@@ -4,6 +4,13 @@ import { useCountriesVisited } from "../hooks/queries/useVisited";
 import { useCitiesVisited } from "../hooks/queries/useCitiesVisited";
 import { TimeLinePage } from "./TimelinePage";
 import { useTrips } from "../hooks/queries/useTrips";
+import { VehicleCard } from "../components/VehicleCard";
+import { AirplanemodeActive, Train } from "@mui/icons-material";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import LuggageIcon from "@mui/icons-material/Luggage";
+import DirectionsBoatFilledIcon from "@mui/icons-material/DirectionsBoatFilled";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import { getTotalDays } from "../utils/getTotalDays";
 export const StatsPage: React.FC = () => {
   const countryCount = useCountriesVisited().data?.length || 0;
   const percentage = (countryCount / 195) * 100;
@@ -11,6 +18,7 @@ export const StatsPage: React.FC = () => {
   const getCities = useCitiesVisited();
   const trips = useTrips();
   const tripCount = trips.data?.length || 0;
+  const totalDays = getTotalDays(trips.data)
   const flightCount =
     trips.data?.filter((t) => t.vehicle?.toLowerCase() === "plane")?.length ||
     0;
@@ -53,36 +61,35 @@ export const StatsPage: React.FC = () => {
             desc="of the world"
           />
         </Stack>
-        <Stack direction="row">
-          <StatLayout
-            textColor="secondary"
-            isLoading={trips.isLoading}
-            stat={`${tripCount}`}
-            desc="Trips"
+        <Stack display="flex" flexWrap={"wrap"} direction="row">
+          <Stack sx={{display: 'flex', width:'100%'}} direction={'row'}>
+
+          <VehicleCard
+            icon={<LuggageIcon />}
+            vehicle="Trips"
+            stats={tripCount}
+            />
+          <VehicleCard
+            icon={<LightModeIcon />}
+            vehicle="Days abroad"
+            stats={totalDays}
+            />
+            </Stack>
+          <VehicleCard
+            icon={<AirplanemodeActive />}
+            vehicle="Flights"
+            stats={flightCount}
           />
-          <StatLayout
-            textColor="secondary"
-            isLoading={trips.isLoading}
-            stat={`${flightCount}`}
-            desc="Flights"
+          <VehicleCard icon={<Train />} vehicle="Flights" stats={trainCount} />
+          <VehicleCard
+            icon={<DirectionsBoatFilledIcon />}
+            vehicle="Boats"
+            stats={boatCount}
           />
-          <StatLayout
-            textColor="secondary"
-            isLoading={trips.isLoading}
-            stat={`${trainCount}`}
-            desc="Trains"
-          />
-          <StatLayout
-            textColor="secondary"
-            isLoading={trips.isLoading}
-            stat={`${boatCount}`}
-            desc="Boats"
-          />
-          <StatLayout
-            textColor="secondary"
-            isLoading={trips.isLoading}
-            stat={`${carCount}`}
-            desc="Cars"
+          <VehicleCard
+            icon={<DirectionsCarIcon />}
+            stats={carCount}
+            vehicle="Cars"
           />
         </Stack>
       </Box>
