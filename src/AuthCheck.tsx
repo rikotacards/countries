@@ -1,6 +1,6 @@
 import { Outlet, useLocation, useNavigate } from "react-router";
 import { useAuth } from "./providers/contexts/authContext";
-import { Box, CircularProgress, LinearProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 
 export const AuthCheck: React.FC = () => {
   const auth = useAuth();
