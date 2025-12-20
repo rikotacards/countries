@@ -20,7 +20,6 @@ export const AddCityDialog: React.FC<AddCountryDialogProps> = ({
   onClose,
   countryCode,
 }) => {
-  console.log('c', countryCode)
   const [filter, setFilter] = React.useState("");
   const debounce = useDebounce(filter);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

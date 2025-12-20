@@ -4,6 +4,7 @@ import {
   DialogTitle,
   Divider,
   IconButton,
+  InputAdornment,
   Tab,
   Tabs,
   TextField,
@@ -12,7 +13,7 @@ import { useDebounce } from "../hooks/useDebounce";
 
 import React from "react";
 import { CountryListTrips } from "./CountryListTrips";
-import { Close } from "@mui/icons-material";
+import { Close, Search } from "@mui/icons-material";
 import type { LocationProps } from "../hooks/useTripForm";
 import { CityListTrips } from "./CityListTrips";
 interface DestinationFormProps {
@@ -30,7 +31,7 @@ export const WhereForm: React.FC<DestinationFormProps> = ({
     setText(e.target.value);
   };
   const debounced = useDebounce(text);
-
+  const searchText = tab === 0 ? "Search for a country" : "Search for a city";
   return (
     <>
       <DialogTitle
@@ -62,9 +63,19 @@ export const WhereForm: React.FC<DestinationFormProps> = ({
       </Tabs>
       <Divider />
       <TextField
-        placeholder="Search"
+        placeholder={searchText}
         sx={{ p: 1 }}
         fullWidth
+        size="small"
+        slotProps={{
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
+                <Search color='disabled' fontSize="small" />
+              </InputAdornment>
+            ),
+          },
+        }}
         value={text}
         onChange={onChange}
       />

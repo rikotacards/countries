@@ -1,4 +1,4 @@
-import { Box, List } from "@mui/material";
+import { Box, List, Typography } from "@mui/material";
 import { getEmojiFlag } from "countries-list";
 import { LocationCity } from "@mui/icons-material";
 import { LocationRowLayout } from "./LocationRowLayout";
@@ -25,16 +25,22 @@ export const CityListTrips: React.FC<CountryAndCityListProps> = React.memo(
         name: city.name,
         countryCode: city.country_code,
         countryName: o?.name,
-        geonameId: city.geonameid
+        geonameId: city.geonameid,
       };
     });
-    const all = filteredCitiesList || []
+    const all = filteredCitiesList || [];
+    const hasRows = all.length > 0;
     const rows = all.map((d, i) => {
       const e = getEmojiFlag(d.countryCode);
       return (
         <LocationRowLayout
           onClick={() => {
-            onClick({isCity: true, country_code: d.countryCode, name: d.name, geonameid: d.geonameId });
+            onClick({
+              isCity: true,
+              country_code: d.countryCode,
+              name: d.name,
+              geonameid: d.geonameId,
+            });
             onClose();
           }}
           disableMore
@@ -55,7 +61,33 @@ export const CityListTrips: React.FC<CountryAndCityListProps> = React.memo(
     }
     return (
       <Box>
-        <List>{rows}</List>
+        {hasRows && <List>{rows}</List>}
+        {!filter && !hasRows && (
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              justifyContent: "center",
+              display: "flex",
+              width: "100%",
+            }}
+          >
+            <Typography color='textSecondary'>Type to start searching</Typography>
+          </Box>
+        )}
+        {filter && !hasRows && (
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              justifyContent: "center",
+              display: "flex",
+              width: "100%",
+            }}
+          >
+            <Typography color='textSecondary'>Can't find what you're looking for</Typography>
+          </Box>
+        )}
       </Box>
     );
   }
