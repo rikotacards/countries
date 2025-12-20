@@ -80,7 +80,7 @@ export const StatsPage: React.FC = () => {
             vehicle="Flights"
             stats={flightCount}
           />
-          <VehicleCard icon={<Train />} vehicle="Flights" stats={trainCount} />
+          <VehicleCard icon={<Train />} vehicle="Trains" stats={trainCount} />
           <VehicleCard
             icon={<DirectionsBoatFilledIcon />}
             vehicle="Boats"
