@@ -14,7 +14,7 @@ createRoot(document.getElementById("root")!).render(
       <CssBaseline />
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <BrowserRouter>
+          <BrowserRouter basename="/app">
             <App />
           </BrowserRouter>
         </AuthProvider>

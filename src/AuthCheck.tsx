@@ -22,8 +22,9 @@ export const AuthCheck: React.FC = () => {
       </Box>
     );
   }
+  console.log("au", auth)
   if (!auth.user && page !== "/login") {
-    nav("login");
+    nav("/login");
   }
   if (auth.user && page == "/login") {
     nav("/");

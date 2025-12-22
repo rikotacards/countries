@@ -1,6 +1,6 @@
 export const getRedirectURL = () => {
   // Access the VITE_SITE_URL from your env files
-  let url = import.meta.env.VITE_SITE_URL ?? 'http://localhost:3000';
+  let url = import.meta.env.VITE_SITE_URL ?? 'http://localhost:5173';
   
   // Ensure there is a trailing slash
   url = url.endsWith('/') ? url : `${url}/`;
